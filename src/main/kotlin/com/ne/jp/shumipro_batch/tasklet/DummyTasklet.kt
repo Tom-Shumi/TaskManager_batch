@@ -12,7 +12,7 @@ import org.springframework.stereotype.Component
 class DummyTasklet: Tasklet {
 
     override fun execute(contribution: StepContribution, chunkContext: ChunkContext): RepeatStatus {
-        println("DummyTasklet");
-        return RepeatStatus.FINISHED;
+        println("DummyTasklet")
+        return RepeatStatus.FINISHED
     }
 }

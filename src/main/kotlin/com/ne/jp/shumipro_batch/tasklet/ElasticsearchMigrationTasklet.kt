@@ -12,7 +12,7 @@ import org.springframework.stereotype.Component
 class ElasticsearchMigrationTasklet: Tasklet {
 
     override fun execute(contribution: StepContribution, chunkContext: ChunkContext): RepeatStatus {
-        println("ElasticsearchMigrationTasklet");
-        return RepeatStatus.FINISHED;
+        println("ElasticsearchMigrationTasklet")
+        return RepeatStatus.FINISHED
     }
 }
