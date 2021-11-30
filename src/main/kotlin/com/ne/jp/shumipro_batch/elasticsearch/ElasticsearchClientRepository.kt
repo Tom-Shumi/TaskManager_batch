@@ -1,5 +1,7 @@
 package com.ne.jp.shumipro_batch.elasticsearch
 
+import org.elasticsearch.action.DocWriteResponse
+import org.elasticsearch.action.index.IndexRequest
 import org.elasticsearch.client.indices.CreateIndexRequest
 import org.elasticsearch.client.indices.CreateIndexResponse
 import org.springframework.stereotype.Repository
@@ -36,10 +38,19 @@ class ElasticsearchClientRepository(
         return try {
             restHighLevelClient.indices().create(request, RequestOptions.DEFAULT)
         } catch (e: Exception) {
-            println(e.cause)
-            println(e.message)
+            e.printStackTrace()
             setClient(elasticsearchClientConfig.getRecreateClient())
             null
+        }
+    }
+
+    fun registerDocument(request: IndexRequest): Boolean {
+        return try {
+            val response = restHighLevelClient.index(request, RequestOptions.DEFAULT)
+            response.result == DocWriteResponse.Result.CREATED;
+        } catch (e: Exception) {
+            e.printStackTrace()
+            false
         }
     }
 }
