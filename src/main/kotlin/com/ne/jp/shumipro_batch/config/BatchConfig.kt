@@ -25,7 +25,8 @@ class BatchConfig(
         return jobBuilderFactory
             .get("elasticsearchMigrationJob")
             .incrementer(RunIdIncrementer())
-            .start(elasticsearchMigrationStep())
+            .flow(elasticsearchMigrationStep())
+            .end()
             .build()
     }
 
