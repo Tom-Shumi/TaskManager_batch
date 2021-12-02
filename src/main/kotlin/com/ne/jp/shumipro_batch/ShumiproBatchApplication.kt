@@ -11,6 +11,5 @@ import kotlin.system.exitProcess
 class ShumiproBatchApplication
 
 fun main(args: Array<String>) {
-//	runApplication<ShumiproBatchApplication>(*args)
 	exitProcess(SpringApplication.exit(runApplication<ShumiproBatchApplication>(*args)))
 }

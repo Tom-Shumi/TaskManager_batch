@@ -27,6 +27,7 @@ dependencies {
 	implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
 	implementation("org.elasticsearch:elasticsearch:7.10.2")
 	implementation("org.elasticsearch.client:elasticsearch-rest-high-level-client:7.10.2")
+	implementation("org.mybatis.spring.boot:mybatis-spring-boot-starter:2.1.4")
 	compileOnly("org.projectlombok:lombok")
 	developmentOnly("org.springframework.boot:spring-boot-devtools")
 	runtimeOnly("org.postgresql:postgresql")

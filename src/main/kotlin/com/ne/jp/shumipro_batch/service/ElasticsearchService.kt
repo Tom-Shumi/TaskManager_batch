@@ -1,5 +1,6 @@
-package com.ne.jp.shumipro_batch.elasticsearch
+package com.ne.jp.shumipro_batch.service
 
+import com.ne.jp.shumipro_batch.elasticsearch.ElasticsearchClientRepository
 import org.elasticsearch.action.index.IndexRequest
 import org.elasticsearch.client.indices.CreateIndexRequest
 import org.elasticsearch.client.indices.CreateIndexResponse
@@ -20,7 +21,7 @@ class ElasticsearchService(private val elasticsearchClientRepository: Elasticsea
 
     fun registerDocument(indexName: String, id: Int, content: String) : Boolean {
         val request = IndexRequest(indexName).id(id.toString())
-                                             .source("content", content);
+            .source("content", content);
         return elasticsearchClientRepository.registerDocument(request)
     }
 }
