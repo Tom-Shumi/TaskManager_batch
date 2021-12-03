@@ -1,5 +1,6 @@
 package com.ne.jp.shumipro_batch.tasklet
 
+import com.ne.jp.shumipro_batch.dto.DocumentDto
 import com.ne.jp.shumipro_batch.service.ElasticsearchService
 import com.ne.jp.shumipro_batch.service.ZeroSecondThinkingContentService
 import com.ne.jp.shumipro_batch.service.ZeroSecondThinkingThemeService
@@ -18,15 +19,17 @@ class ElasticsearchMigrationTasklet(private val elasticsearchService: Elasticsea
 
     companion object {
         const val INDEX_NAME_THEME = "zero_second_thinking_theme"
+        const val INDEX_NAME_CONTENT = "zero_second_thinking_content"
     }
 
     override fun execute(contribution: StepContribution, chunkContext: ChunkContext): RepeatStatus {
-//        elasticsearchService.registerDocument(INDEX_NAME_THEME, 1, "test")
+
         val themeList = zeroSecondThinkingThemeService.fetchDocumentDto()
         val contentList = zeroSecondThinkingContentService.fetchDocumentDto()
 
-        themeList.forEach{t -> println(t)}
-        contentList.forEach{t -> println(t)}
+        val document = DocumentDto(1, "user", "test")
+//        elasticsearchService.registerDocument(INDEX_NAME_THEME, 1, document.toMap())
+        elasticsearchService.deleteAllDocument(INDEX_NAME_THEME);
         return RepeatStatus.FINISHED
     }
 }

@@ -1,6 +1,7 @@
 package com.ne.jp.shumipro_batch.elasticsearch
 
 import org.elasticsearch.action.DocWriteResponse
+import org.elasticsearch.action.delete.DeleteRequest
 import org.elasticsearch.action.index.IndexRequest
 import org.elasticsearch.client.indices.CreateIndexRequest
 import org.elasticsearch.client.indices.CreateIndexResponse
@@ -13,6 +14,14 @@ import org.elasticsearch.action.search.SearchRequest
 
 import org.elasticsearch.action.search.SearchResponse
 import java.lang.Exception
+import org.elasticsearch.index.reindex.BulkByScrollResponse
+
+import org.elasticsearch.index.query.QueryBuilders
+
+import org.elasticsearch.index.reindex.DeleteByQueryRequest
+
+
+
 
 
 @Repository
@@ -34,14 +43,13 @@ class ElasticsearchClientRepository(
         }
     }
 
-    fun createIndex(request: CreateIndexRequest): CreateIndexResponse? {
-        return try {
-            restHighLevelClient.indices().create(request, RequestOptions.DEFAULT)
-        } catch (e: Exception) {
-            e.printStackTrace()
-            setClient(elasticsearchClientConfig.getRecreateClient())
-            null
-        }
+    fun createIndex(request: CreateIndexRequest) {
+        restHighLevelClient.indices().create(request, RequestOptions.DEFAULT)
+    }
+
+    fun deleteAllDocument(request: DeleteByQueryRequest) {
+        request.setQuery(QueryBuilders.matchAllQuery())
+        restHighLevelClient.deleteByQuery(request, RequestOptions.DEFAULT)
     }
 
     fun registerDocument(request: IndexRequest): Boolean {
@@ -50,6 +58,7 @@ class ElasticsearchClientRepository(
             response.result == DocWriteResponse.Result.CREATED;
         } catch (e: Exception) {
             e.printStackTrace()
+            setClient(elasticsearchClientConfig.getRecreateClient())
             false
         }
     }
