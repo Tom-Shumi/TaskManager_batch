@@ -24,12 +24,34 @@ class ElasticsearchMigrationTasklet(private val elasticsearchService: Elasticsea
 
     override fun execute(contribution: StepContribution, chunkContext: ChunkContext): RepeatStatus {
 
-        val themeList = zeroSecondThinkingThemeService.fetchDocumentDto()
-        val contentList = zeroSecondThinkingContentService.fetchDocumentDto()
+        deleteDocument()
+        registerDocument()
 
-        val document = DocumentDto(1, "user", "test")
-//        elasticsearchService.registerDocument(INDEX_NAME_THEME, 1, document.toMap())
-        elasticsearchService.deleteAllDocument(INDEX_NAME_THEME);
         return RepeatStatus.FINISHED
     }
+
+    private fun deleteDocument() {
+        elasticsearchService.deleteAllDocument(INDEX_NAME_THEME)
+        elasticsearchService.deleteAllDocument(INDEX_NAME_CONTENT)
+    }
+
+    private fun registerDocument() {
+        registerTheme()
+        registerContent()
+    }
+
+    private fun registerTheme() {
+        val themeList = zeroSecondThinkingThemeService.fetchDocumentDto()
+        register(INDEX_NAME_THEME, themeList)
+    }
+
+    private fun registerContent() {
+        val themeList = zeroSecondThinkingContentService.fetchDocumentDto()
+        register(INDEX_NAME_CONTENT, themeList)
+    }
+
+    private fun register(indexName: String, documentList: List<DocumentDto>) {
+        elasticsearchService.bulkRegisterDocument(indexName, documentList)
+    }
+
 }

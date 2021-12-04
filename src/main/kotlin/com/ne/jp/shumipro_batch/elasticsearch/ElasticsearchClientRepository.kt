@@ -1,6 +1,7 @@
 package com.ne.jp.shumipro_batch.elasticsearch
 
 import org.elasticsearch.action.DocWriteResponse
+import org.elasticsearch.action.bulk.BulkRequest
 import org.elasticsearch.action.delete.DeleteRequest
 import org.elasticsearch.action.index.IndexRequest
 import org.elasticsearch.client.indices.CreateIndexRequest
@@ -56,6 +57,17 @@ class ElasticsearchClientRepository(
         return try {
             val response = restHighLevelClient.index(request, RequestOptions.DEFAULT)
             response.result == DocWriteResponse.Result.CREATED;
+        } catch (e: Exception) {
+            e.printStackTrace()
+            setClient(elasticsearchClientConfig.getRecreateClient())
+            false
+        }
+    }
+
+    fun bulkRegisterDocument(request: BulkRequest): Boolean {
+        return try {
+            val response = restHighLevelClient.bulk(request, RequestOptions.DEFAULT)
+            response.hasFailures()
         } catch (e: Exception) {
             e.printStackTrace()
             setClient(elasticsearchClientConfig.getRecreateClient())
