@@ -2,10 +2,8 @@ package com.ne.jp.shumipro_batch.elasticsearch
 
 import org.elasticsearch.action.DocWriteResponse
 import org.elasticsearch.action.bulk.BulkRequest
-import org.elasticsearch.action.delete.DeleteRequest
 import org.elasticsearch.action.index.IndexRequest
 import org.elasticsearch.client.indices.CreateIndexRequest
-import org.elasticsearch.client.indices.CreateIndexResponse
 import org.springframework.stereotype.Repository
 import org.elasticsearch.client.RestHighLevelClient
 
@@ -15,15 +13,10 @@ import org.elasticsearch.action.search.SearchRequest
 
 import org.elasticsearch.action.search.SearchResponse
 import java.lang.Exception
-import org.elasticsearch.index.reindex.BulkByScrollResponse
 
 import org.elasticsearch.index.query.QueryBuilders
 
 import org.elasticsearch.index.reindex.DeleteByQueryRequest
-
-
-
-
 
 @Repository
 class ElasticsearchClientRepository(

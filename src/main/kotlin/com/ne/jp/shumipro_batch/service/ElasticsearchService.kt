@@ -3,10 +3,8 @@ package com.ne.jp.shumipro_batch.service
 import com.ne.jp.shumipro_batch.dto.DocumentDto
 import com.ne.jp.shumipro_batch.elasticsearch.ElasticsearchClientRepository
 import org.elasticsearch.action.bulk.BulkRequest
-import org.elasticsearch.action.delete.DeleteRequest
 import org.elasticsearch.action.index.IndexRequest
 import org.elasticsearch.client.indices.CreateIndexRequest
-import org.elasticsearch.client.indices.CreateIndexResponse
 import org.elasticsearch.index.reindex.DeleteByQueryRequest
 import org.springframework.stereotype.Service
 
