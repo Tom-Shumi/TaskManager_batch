@@ -17,15 +17,15 @@ class ElasticsearchService(private val elasticsearchClientRepository: Elasticsea
     }
 
     fun registerDocument(indexName: String, document: DocumentDto) : Boolean {
-        val request = createIndexRequest(indexName, document)
+        val request = createIndexRequest(indexName, document.id, document)
 
         return elasticsearchClientRepository.registerDocument(request)
     }
 
     fun bulkRegisterDocument(indexName: String, documentList: List<DocumentDto>): Boolean  {
         val request = BulkRequest()
-        for (document in documentList) {
-            request.add(createIndexRequest(indexName, document))
+        for ((index, document) in documentList.withIndex()) {
+            request.add(createIndexRequest(indexName, index + 1, document))
         }
 
         return elasticsearchClientRepository.bulkRegisterDocument(request)
@@ -35,7 +35,7 @@ class ElasticsearchService(private val elasticsearchClientRepository: Elasticsea
         elasticsearchClientRepository.deleteAllDocument(DeleteByQueryRequest(indexName))
     }
 
-    private fun createIndexRequest(indexName: String, document: DocumentDto): IndexRequest {
-        return IndexRequest(indexName).id(document.id.toString()).source(document.toMap())
+    private fun createIndexRequest(indexName: String, index: Int, document: DocumentDto): IndexRequest {
+        return IndexRequest(indexName).id(index.toString()).source(document.toMap())
     }
 }

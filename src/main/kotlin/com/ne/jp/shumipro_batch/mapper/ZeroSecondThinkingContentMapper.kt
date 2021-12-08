@@ -8,12 +8,12 @@ import org.apache.ibatis.annotations.Select
 interface ZeroSecondThinkingContentMapper {
 
     @Select("SELECT " +
-            "zstc.id, " +
+            "zstt.id, " +
             "zstt.username, " +
             "zstc.content as content " +
             "FROM zero_second_thinking_content zstc " +
             "INNER JOIN zero_second_thinking_theme zstt " +
             "ON zstc.theme_id = zstt.id " +
-            "ORDER BY zstc.id")
+            "ORDER BY zstt.id")
     fun fetchDocumentDto(): List<DocumentDto>
 }
